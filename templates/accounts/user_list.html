@@ -7,7 +7,16 @@
 </div>
 <div class="card p-3">
   <table class="table table-hover align-middle mb-0">
-    <thead><tr><th>Username</th><th>Full Name</th><th>Role</th><th>Branch</th><th>Status</th></tr></thead>
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Full Name</th>
+        <th>Role</th>
+        <th>Branch</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
     <tbody>
       {% for u in users %}
       <tr>
@@ -15,7 +24,21 @@
         <td>{{ u.get_full_name }}</td>
         <td><span class="badge bg-secondary">{{ u.get_role_display }}</span></td>
         <td>{{ u.branch|default:"-" }}</td>
-        <td>{% if u.is_active %}<span class="badge bg-success">Active</span>{% else %}<span class="badge bg-danger">Inactive</span>{% endif %}</td>
+        <td>
+          {% if u.is_active %}
+          <span class="badge bg-success">Active</span>
+          {% else %}
+          <span class="badge bg-danger">Inactive</span>
+          {% endif %}
+        </td>
+        <td>
+          {% if u.is_active %}
+          <a href="{% url 'accounts:deactivate_user' u.id %}" class="btn btn-outline-danger btn-sm"
+            onclick="return confirm('Deactivate {{ u.username }}?');">
+            Deactivate
+          </a>
+          {% endif %}
+        </td>
       </tr>
       {% endfor %}
     </tbody>

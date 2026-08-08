@@ -1,0 +1,55 @@
+{% extends "base/public_base.html" %}
+{% load static %}
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-5">
+      <div class="card p-4 shadow">
+        <div class="text-center mb-3">
+          <img src="{% static 'images/church_logo.jpg' %}" style="height:80px;border-radius:50%;">
+          <h5 class="mt-2" style="color:var(--cop-navy);">Create an Account</h5>
+        </div>
+
+        {% if form.errors %}
+        <div class="alert alert-danger">
+          Please correct the errors below.
+        </div>
+        {% endif %}
+
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">
+            <label class="form-label">Username</label>
+            {{ form.username }}
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Email</label>
+            {{ form.email }}
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Phone Number</label>
+            {{ form.phone_number }}
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Role</label>
+            {{ form.role }}
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Password</label>
+            {{ form.password1 }}
+          </div>
+          <div class="mb-3">
+            <label class="form-label">Confirm Password</label>
+            {{ form.password2 }}
+          </div>
+          <button class="btn btn-navy w-100" type="submit">Sign Up</button>
+        </form>
+
+        <p class="text-center mt-3">
+          Already have an account? <a href="{% url 'accounts:login' %}">Log in</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
