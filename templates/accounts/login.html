@@ -1,0 +1,22 @@
+{% extends "base/public_base.html" %}
+{% load static %}
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <div class="card p-4 shadow">
+        <div class="text-center mb-3">
+          <img src="{% static 'images/church_logo.jpg' %}" style="height:80px;border-radius:50%;">
+          <h5 class="mt-2" style="color:var(--cop-navy);">Staff Login</h5>
+        </div>
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">{{ form.username }}</div>
+          <div class="mb-3">{{ form.password }}</div>
+          <button class="btn btn-navy w-100" type="submit">Login</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

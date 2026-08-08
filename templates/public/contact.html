@@ -1,0 +1,33 @@
+{% extends "base/public_base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h2 style="color:var(--cop-navy);">Contact Us</h2>
+  <div class="row">
+    <div class="col-md-7">
+      <form method="post">
+        {% csrf_token %}
+        <div class="mb-3">{{ form.name.label_tag }}{{ form.name }}</div>
+        <div class="mb-3">{{ form.email.label_tag }}{{ form.email }}</div>
+        <div class="mb-3">{{ form.subject.label_tag }}{{ form.subject }}</div>
+        <div class="mb-3">{{ form.message.label_tag }}{{ form.message }}</div>
+        <button class="btn btn-navy" type="submit">Send Message</button>
+      </form>
+    </div>
+    <div class="col-md-5">
+      <div class="card p-4">
+        <h5>Visit Us</h5>
+        <p><i class="fa-solid fa-location-dot text-warning"></i> Oforikrom, Kumasi, Ghana</p>
+        <p><i class="fa-solid fa-phone text-warning"></i> +233 546708350 /0546637651</p>
+
+        <p><i class="fa-solid fa-envelope text-warning"></i><a
+            href="mailto:senioralexanderawini@gmail.com">senioralexanderawini@gmail.com</a>
+        </p>
+        <p>
+          <i class="fa-brands fa-whatsApp text-success"></i>
+          <a href="https://wa.me/233546708350" target="-blank">Chat with us on WhatsApp</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

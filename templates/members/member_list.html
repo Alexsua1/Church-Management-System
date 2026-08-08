@@ -1,0 +1,48 @@
+{% extends "base/dashboard_base.html" %}
+{% block page_title %}Members{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+  <form class="d-flex" method="get">
+    <input type="text" name="q" value="{{ query }}" class="form-control me-2" placeholder="Search members...">
+    <button class="btn btn-outline-secondary">Search</button>
+  </form>
+  <a href="{% url 'members:create' %}" class="btn btn-navy"><i class="fa-solid fa-user-plus"></i> Register Member</a>
+</div>
+<div class="card p-3">
+  <table class="table table-hover align-middle mb-0">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Gender</th>
+        <th>Phone</th>
+        <th>Local</th>
+        <th>Status</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for m in members %}
+      <tr>
+        <td>{{ m.full_name }}</td>
+        <td>{{ m.get_gender_display }}</td>
+        <td>{{ m.phone_number }}</td>
+        <td>{{ m.branch }}</td>
+        <td><span class="badge bg-success">{{ m.get_status_display }}</span></td>
+        <td>
+          <a href="{% url 'members:detail' m.pk %}" class="btn btn-sm btn-outline-primary">View</a>
+          <!--whatsapp link-->
+          <a href="https://wa.me/{{ m.phone_number }}" target="_blank" class="btn btn-sm btn-success">
+            <i class="fa-brands fa-whatsapp"></i> Chat
+          </a>
+        </td>
+      </tr>
+      {% empty %}
+      <tr>
+        <td colspan="7" class="text-center text-muted">No members found.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

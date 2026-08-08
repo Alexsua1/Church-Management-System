@@ -1,0 +1,22 @@
+{% extends "base/public_base.html" %}
+{% block content %}
+<div class="container py-5">
+  <div class="row justify-content-center">
+    <div class="col-md-6">
+      <div class="card p-4 shadow-sm">
+        <h3 class="text-center mb-3" style="color:var(--cop-navy);">Give Online</h3>
+        <p class="text-center text-muted">"Bring the whole tithe into the storehouse..." — Malachi 3:10</p>
+        <form method="post">
+          {% csrf_token %}
+          <div class="mb-3">{{ form.donor_name.label_tag }}{{ form.donor_name }}</div>
+          <div class="mb-3">{{ form.email.label_tag }}{{ form.email }}</div>
+          <div class="mb-3">{{ form.offering_type.label_tag }}{{ form.offering_type }}</div>
+          <div class="mb-3">{{ form.amount.label_tag }}{{ form.amount }}</div>
+          <button class="btn btn-gold w-100" type="submit">Proceed to Give</button>
+        </form>
+        <p class="small text-muted mt-3 text-center">Secure payments powered by Paystack (Mobile Money & Card).</p>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

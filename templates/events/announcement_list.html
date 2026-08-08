@@ -1,0 +1,15 @@
+{% extends "base/dashboard_base.html" %}
+{% block page_title %}Announcements{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+  <h5>Announcements</h5>
+  <a href="{% url 'events:announcement_create' %}" class="btn btn-navy">New Announcement</a>
+</div>
+{% for a in announcements %}
+<div class="card p-3 mb-2">
+  <h6>{{ a.title }}</h6>
+  <p>{{ a.message }}</p>
+  <p class="small text-muted mb-0">{{ a.created_at|date:"d M Y H:i" }} &bull; {{ a.posted_by }}</p>
+</div>
+{% empty %}<p class="text-muted">No announcements yet.</p>{% endfor %}
+{% endblock %}

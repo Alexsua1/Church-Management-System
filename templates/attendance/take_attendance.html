@@ -1,0 +1,40 @@
+{% extends "base/dashboard_base.html" %}
+{% block page_title %}Take Attendance{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between align-items-center mb-3">
+  <div>
+    <h5 class="mb-0">{{ session.get_session_type_display }} — {{ session.date }}</h5>
+    <span class="badge bg-success">{{ checked_in_count }} checked in</span>
+  </div>
+  <div class="text-end">
+    <p class="small text-muted mb-0">Members can also self check-in by scanning the QR code linked to:</p>
+    <code>/attendance/checkin/{{ session.qr_token }}/</code>
+  </div>
+</div>
+<form class="mb-3" method="get">
+  <input type="text" name="q" value="{{ query }}" class="form-control" placeholder="Search member by name or ID...">
+</form>
+<div class="card p-3">
+  <table class="table table-hover align-middle mb-0">
+    <thead><tr><th>Name</th><th>Membership ID</th><th>Status</th><th></th></tr></thead>
+    <tbody>
+      {% for m in members %}
+      <tr>
+        <td>{{ m.full_name }}</td>
+        <td>{{ m.membership_id }}</td>
+        <td>{% if m.pk in checked_in_ids %}<span class="badge bg-success">Checked In</span>{% else %}<span class="badge bg-secondary">Not Yet</span>{% endif %}</td>
+        <td>
+          {% if m.pk not in checked_in_ids %}
+          <form method="post" class="d-inline">
+            {% csrf_token %}
+            <input type="hidden" name="member_id" value="{{ m.pk }}">
+            <button class="btn btn-sm btn-navy" type="submit">Check In</button>
+          </form>
+          {% endif %}
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

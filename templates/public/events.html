@@ -1,0 +1,21 @@
+{% extends "base/public_base.html" %}
+{% block content %}
+<div class="container py-5">
+  <h2 style="color:var(--cop-navy);">Events</h2>
+  <div class="row g-4 mt-2">
+    {% for event in events %}
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5>{{ event.title }}</h5>
+          <p class="small text-muted">{{ event.start_datetime|date:"D, d M Y - H:i" }} &bull; {{ event.location }}</p>
+          <p>{{ event.description }}</p>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-muted text-center">No events published yet.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base/public_base.html" %}
+{% load static %}
+{% block content %}
+<div class="hero-section text-center">
+  <div class="container">
+    <img src="{% static 'images/church_logo.jpg' %}" style="height:120px;border-radius:50%;border:4px solid #f4c81c;" alt="Logo" class="mb-3">
+    <h1 class="display-5">Welcome to The Church of Pentecost</h1>
+    <h4 class="text-warning">Oforikrom Central</h4>
+    <p class="lead mt-3">"Where lives are transformed by the power of the Holy Spirit."</p>
+    <a href="{% url 'public:events' %}" class="btn btn-gold btn-lg me-2">Upcoming Events</a>
+    <a href="{% url 'public:donate' %}" class="btn btn-outline-light btn-lg">Give Online</a>
+  </div>
+</div>
+
+<div class="container py-5">
+  <h3 class="text-center mb-4" style="color:var(--cop-navy);">Upcoming Events</h3>
+  <div class="row g-4">
+    {% for event in upcoming_events %}
+    <div class="col-md-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title">{{ event.title }}</h5>
+          <p class="text-muted small mb-1"><i class="fa-regular fa-calendar"></i> {{ event.start_datetime|date:"D, d M Y - H:i" }}</p>
+          <p class="text-muted small mb-2"><i class="fa-solid fa-location-dot"></i> {{ event.location }}</p>
+          <p class="card-text">{{ event.description|truncatewords:20 }}</p>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p class="text-center text-muted">No upcoming events at the moment. Please check back soon.</p>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}

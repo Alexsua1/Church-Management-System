@@ -1,0 +1,63 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{% block title %}The Church of Pentecost - Oforikrom Central{% endblock %}</title>
+<link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'vendor/fontawesome/all.min.css' %}">
+<link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-church sticky-top">
+  <div class="container">
+    <a class="navbar-brand d-flex align-items-center" href="{% url 'public:home' %}">
+      <img src="{% static 'images/church_logo.jpg' %}" class="church-logo" alt="Logo">
+      <span>THE CHURCH OF PENTECOST<br><small>Oforikrom Central</small></span>
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="{% url 'public:home' %}">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'public:about' %}">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'public:events' %}">Events</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'public:contact' %}">Contact</a></li>
+        <li class="nav-item"><a class="nav-link btn-gold rounded px-3 mx-1" href="{% url 'public:donate' %}">Give Online</a></li>
+        {% if user.is_authenticated %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'dashboard:home' %}"><i class="fa-solid fa-gauge"></i> Dashboard</a></li>
+        {% else %}
+        <li class="nav-item"><a class="nav-link" href="{% url 'accounts:login' %}"><i class="fa-solid fa-right-to-bracket"></i> Staff Login</a></li>
+        {% endif %}
+      </ul>
+    </div>
+  </div>
+</nav>
+
+{% if messages %}
+<div class="container mt-3">
+  {% for message in messages %}
+  <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+    {{ message }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+  </div>
+  {% endfor %}
+</div>
+{% endif %}
+
+{% block content %}{% endblock %}
+
+<footer class="footer-church mt-5">
+  <div class="container text-center">
+    <img src="{% static 'images/church_logo.jpg' %}" style="height:60px;border-radius:50%;" alt="Logo" class="mb-2">
+    <p class="mb-1">The Church of Pentecost — Oforikrom Central</p>
+    <p class="small mb-0">&copy; {% now "Y" %} All rights reserved.</p>
+  </div>
+</footer>
+
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html>

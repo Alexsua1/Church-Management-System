@@ -1,0 +1,118 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Dashboard{% endblock %} | Church Management System</title>
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'vendor/fontawesome/all.min.css' %}">
+  <link href="{% static 'css/style.css' %}" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+
+<body>
+  <div class="d-flex">
+    <!-- Sidebar -->
+    <div class="sidebar d-none d-md-flex flex-column flex-shrink-0">
+      <div class="brand d-flex align-items-center">
+        <img src="{% static 'images/church_logo.jpg' %}" class="church-logo" alt="Logo">
+        <div>
+          <div class="fw-bold" style="font-size:.85rem;">CHURCH OF PENTECOST</div>
+          <div class="small text-warning">Oforikrom Central</div>
+        </div>
+      </div>
+      <ul class="nav nav-pills flex-column mb-auto">
+        <li class="nav-item"><a
+            class="nav-link {% if request.resolver_match.namespace == 'dashboard' %}active{% endif %}"
+            href="{% url 'dashboard:home' %}"><i class="fa-solid fa-gauge me-2"></i>Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.resolver_match.namespace == 'members' %}active{% endif %}"
+            href="{% url 'members:list' %}"><i class="fa-solid fa-users me-2"></i>Members</a></li>
+        <li class="nav-item"><a
+            class="nav-link {% if request.resolver_match.namespace == 'attendance' %}active{% endif %}"
+            href="{% url 'attendance:list' %}"><i class="fa-solid fa-clipboard-check me-2"></i>Attendance</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.resolver_match.namespace == 'finance' %}active{% endif %}"
+            href="{% url 'finance:dashboard' %}"><i class="fa-solid fa-sack-dollar me-2"></i>Finance</a></li>
+        <li class="nav-item"><a
+            class="nav-link {% if request.resolver_match.namespace == 'departments' %}active{% endif %}"
+            href="{% url 'departments:list' %}"><i class="fa-solid fa-sitemap me-2"></i>Departments</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.resolver_match.namespace == 'events' %}active{% endif %}"
+            href="{% url 'events:list' %}"><i class="fa-solid fa-calendar-days me-2"></i>Events</a></li>
+        <li class="nav-item"><a
+            class="nav-link {% if request.resolver_match.namespace == 'inventory' %}active{% endif %}"
+            href="{% url 'inventory:list' %}"><i class="fa-solid fa-boxes-stacked me-2"></i>Inventory</a></li>
+        <li class="nav-item"><a class="nav-link {% if request.resolver_match.namespace == 'reports' %}active{% endif %}"
+            href="{% url 'reports:center' %}"><i class="fa-solid fa-file-lines me-2"></i>Reports</a></li>
+        {% if user.is_admin %}
+        <li class="nav-item"><a
+            class="nav-link {% if request.resolver_match.url_name == 'manage_users' %}active{% endif %}"
+            href="{% url 'accounts:manage_users' %}"><i class="fa-solid fa-user-gear me-2"></i>User Management</a></li>
+        {% endif %}
+      </ul>
+      <hr class="text-white-50">
+      <a href="{% url 'accounts:logout' %}" class="nav-link text-danger px-3 pb-3"><i
+          class="fa-solid fa-right-from-bracket me-2"></i>Logout</a>
+    </div>
+
+    <!-- Main content -->
+    <div class="flex-grow-1">
+      <nav class="topbar navbar navbar-expand px-3 py-2">
+        <button class="btn btn-outline-secondary d-md-none me-2" type="button" data-bs-toggle="offcanvas"
+          data-bs-target="#mobileSidebar">
+          <i class="fa-solid fa-bars"></i>
+        </button>
+        <span class="fw-semibold">{% block page_title %}Dashboard{% endblock %}</span>
+        <div class="ms-auto d-flex align-items-center gap-3">
+          <div class="form-check form-switch mb-0">
+            <input class="form-check-input" type="checkbox" id="darkModeToggle">
+            <label class="form-check-label small" for="darkModeToggle"><i class="fa-solid fa-moon"></i></label>
+          </div>
+          <span class="small text-muted">{{ user.get_full_name|default:user.username }} <span
+              class="badge bg-secondary">{{ user.get_role_display }}</span></span>
+        </div>
+      </nav>
+
+      {% if messages %}
+      <div class="container-fluid mt-2">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+          {{ message }}
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+        {% endfor %}
+      </div>
+      {% endif %}
+
+      <div class="container-fluid p-4">
+        {% block content %}{% endblock %}
+      </div>
+    </div>
+  </div>
+
+  <!-- Mobile sidebar -->
+  <div class="offcanvas offcanvas-start sidebar" id="mobileSidebar">
+    <div class="offcanvas-body p-0">
+      <div class="brand d-flex align-items-center">
+        <img src="{% static 'images/church_logo.jpg' %}" class="church-logo" alt="Logo">
+        <div class="fw-bold small">CHURCH OF PENTECOST<br><span class="text-warning">Oforikrom Central</span></div>
+      </div>
+      <ul class="nav nav-pills flex-column">
+        <li class="nav-item"><a class="nav-link" href="{% url 'dashboard:home' %}">Dashboard</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'members:list' %}">Members</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'attendance:list' %}">Attendance</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'finance:dashboard' %}">Finance</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'departments:list' %}">Departments</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'events:list' %}">Events</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'inventory:list' %}">Inventory</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'reports:center' %}">Reports</a></li>
+        <li class="nav-item"><a class="nav-link text-danger" href="{% url 'accounts:logout' %}">Logout</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+  <script src="{% static 'js/main.js' %}"></script>
+</body>
+
+</html>

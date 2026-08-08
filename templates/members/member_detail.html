@@ -1,0 +1,32 @@
+{% extends "base/dashboard_base.html" %}
+{% block page_title %}Member Profile{% endblock %}
+{% block content %}
+<div class="row">
+  <div class="col-md-4">
+    <div class="card p-3 text-center">
+      {% if member.photo %}<img src="{{ member.photo.url }}" class="rounded-circle mb-2" style="width:120px;height:120px;object-fit:cover;">{% endif %}
+      <h5>{{ member.full_name }}</h5>
+      <p class="text-muted">{{ member.membership_id }}</p>
+      {% if member.qr_code %}<img src="{{ member.qr_code.url }}" style="width:150px;" alt="QR Code"><p class="small text-muted">QR Attendance Code</p>{% endif %}
+      <a href="{% url 'members:update' member.pk %}" class="btn btn-navy btn-sm">Edit</a>
+      <a href="{% url 'members:delete' member.pk %}" class="btn btn-outline-danger btn-sm">Delete</a>
+    </div>
+  </div>
+  <div class="col-md-8">
+    <div class="card p-3">
+      <table class="table table-borderless mb-0">
+        <tr><th>Gender</th><td>{{ member.get_gender_display }}</td></tr>
+        <tr><th>Phone</th><td>{{ member.phone_number }}</td></tr>
+        <tr><th>Email</th><td>{{ member.email }}</td></tr>
+        <tr><th>Branch</th><td>{{ member.branch }}</td></tr>
+        <tr><th>Departments</th><td>{% for d in member.department.all %}{{ d.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td></tr>
+        <tr><th>Marital Status</th><td>{{ member.get_marital_status_display }}</td></tr>
+        <tr><th>Occupation</th><td>{{ member.occupation }}</td></tr>
+        <tr><th>Address</th><td>{{ member.residential_address }}</td></tr>
+        <tr><th>Baptized</th><td>{{ member.baptized|yesno:"Yes,No" }}</td></tr>
+        <tr><th>Status</th><td>{{ member.get_status_display }}</td></tr>
+      </table>
+    </div>
+  </div>
+</div>
+{% endblock %}

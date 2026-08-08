@@ -1,0 +1,27 @@
+{% extends "base/dashboard_base.html" %}
+{% block page_title %}Report Center{% endblock %}
+{% block content %}
+<div class="row g-3">
+  <div class="col-md-4">
+    <div class="card p-3 text-center">
+      <h6><i class="fa-solid fa-users text-primary"></i> Membership Report</h6>
+      <p class="small text-muted">Export the full members list.</p>
+      <a href="{% url 'reports:members_excel' %}" class="btn btn-navy btn-sm">Export to Excel</a>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card p-3 text-center">
+      <h6><i class="fa-solid fa-sack-dollar text-success"></i> Financial Report</h6>
+      <p class="small text-muted">Export recent offerings summary.</p>
+      <a href="{% url 'reports:finance_pdf' %}" class="btn btn-gold btn-sm">Export to PDF</a>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <div class="card p-3 text-center">
+      <h6><i class="fa-solid fa-clipboard-check text-warning"></i> Attendance Report</h6>
+      <p class="small text-muted">Export recent attendance records.</p>
+      <a href="{% url 'reports:attendance_excel' %}" class="btn btn-navy btn-sm">Export to Excel</a>
+    </div>
+  </div>
+</div>
+{% endblock %}

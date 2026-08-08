@@ -1,0 +1,25 @@
+{% extends "base/dashboard_base.html" %}
+{% block page_title %}Administrator Dashboard{% endblock %}
+{% block content %}
+<h4 class="mb-3">Welcome back, {{ user.get_full_name|default:user.username }} 👋</h4>
+{% include "dashboard/_stats_common.html" %}
+<div class="row g-3">
+  <div class="col-md-6">
+    <div class="card p-3">
+      <h6>This Month's Finance</h6>
+      <p>Offerings: <strong class="text-success">GHS {{ month_offerings_total|floatformat:2|default:"0.00" }}</strong></p>
+      <p>Expenses: <strong class="text-danger">GHS {{ month_expenses_total|floatformat:2|default:"0.00" }}</strong></p>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card p-3">
+      <h6>Recent Announcements</h6>
+      <ul class="list-unstyled mb-0">
+        {% for a in recent_announcements %}
+        <li class="mb-2"><strong>{{ a.title }}</strong><br><span class="small text-muted">{{ a.created_at|date:"d M Y" }}</span></li>
+        {% empty %}<li class="text-muted">No announcements yet.</li>{% endfor %}
+      </ul>
+    </div>
+  </div>
+</div>
+{% endblock %}

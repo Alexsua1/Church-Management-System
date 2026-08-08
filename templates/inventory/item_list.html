@@ -1,0 +1,18 @@
+{% extends "base/dashboard_base.html" %}
+{% block page_title %}Inventory{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+  <h5>Inventory</h5>
+  <a href="{% url 'inventory:create' %}" class="btn btn-navy">Add Item</a>
+</div>
+<div class="card p-3">
+  <table class="table table-hover mb-0">
+    <thead><tr><th>Name</th><th>Category</th><th>Qty</th><th>Condition</th><th>Location</th></tr></thead>
+    <tbody>
+      {% for i in items %}
+      <tr><td>{{ i.name }}</td><td>{{ i.category }}</td><td>{{ i.quantity }}</td><td>{{ i.get_condition_display }}</td><td>{{ i.location }}</td></tr>
+      {% empty %}<tr><td colspan="5" class="text-center text-muted">No items yet.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

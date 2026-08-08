@@ -1,0 +1,14 @@
+{% extends "base/dashboard_base.html" %}
+{% block page_title %}Pastor Dashboard{% endblock %}
+{% block content %}
+<h4 class="mb-3">Welcome, Pastor {{ user.get_full_name|default:user.username }}</h4>
+{% include "dashboard/_stats_common.html" %}
+<div class="card p-3">
+  <h6>Upcoming Events</h6>
+  <ul class="list-unstyled mb-0">
+    {% for e in upcoming_events %}
+    <li class="mb-2">{{ e.title }} — <span class="small text-muted">{{ e.start_datetime|date:"d M Y H:i" }}</span></li>
+    {% empty %}<li class="text-muted">No upcoming events.</li>{% endfor %}
+  </ul>
+</div>
+{% endblock %}

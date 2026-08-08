@@ -1,0 +1,19 @@
+{% extends "base/dashboard_base.html" %}
+{% block page_title %}Departments{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+  <h5>Departments</h5>
+  <a href="{% url 'departments:create' %}" class="btn btn-navy">Add Department</a>
+</div>
+<div class="row g-3">
+  {% for d in departments %}
+  <div class="col-md-4">
+    <div class="card p-3">
+      <h6>{{ d.name }}</h6>
+      <p class="small text-muted">Leader: {{ d.leader_name|default:"-" }}</p>
+      <a href="{% url 'departments:detail' d.pk %}" class="btn btn-sm btn-outline-primary">View</a>
+    </div>
+  </div>
+  {% empty %}<p class="text-muted">No departments yet.</p>{% endfor %}
+</div>
+{% endblock %}

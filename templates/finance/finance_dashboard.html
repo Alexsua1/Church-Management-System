@@ -1,0 +1,33 @@
+{% extends "base/dashboard_base.html" %}
+{% block page_title %}Finance{% endblock %}
+{% block content %}
+<div class="row g-3 mb-4">
+  <div class="col-md-4"><div class="card stat-card p-3"><div class="small">Total Offerings</div><div class="stat-value">GHS {{ total_offerings|floatformat:2 }}</div></div></div>
+  <div class="col-md-4"><div class="card stat-card gold p-3"><div class="small">Total Expenses</div><div class="stat-value">GHS {{ total_expenses|floatformat:2 }}</div></div></div>
+  <div class="col-md-4"><div class="card stat-card p-3"><div class="small">Balance</div><div class="stat-value">GHS {{ balance|floatformat:2 }}</div></div></div>
+</div>
+<div class="d-flex gap-2 mb-3">
+  <a href="{% url 'finance:offerings' %}" class="btn btn-navy btn-sm">View Offerings</a>
+  <a href="{% url 'finance:offering_create' %}" class="btn btn-outline-primary btn-sm">Record Offering</a>
+  <a href="{% url 'finance:expenses' %}" class="btn btn-navy btn-sm">View Expenses</a>
+  <a href="{% url 'finance:expense_create' %}" class="btn btn-outline-primary btn-sm">Record Expense</a>
+</div>
+<div class="row g-3">
+  <div class="col-md-6">
+    <div class="card p-3">
+      <h6>Recent Offerings</h6>
+      <table class="table table-sm mb-0"><tbody>
+        {% for o in recent_offerings %}<tr><td>{{ o.get_offering_type_display }}</td><td>GHS {{ o.amount }}</td><td>{{ o.date }}</td></tr>{% endfor %}
+      </tbody></table>
+    </div>
+  </div>
+  <div class="col-md-6">
+    <div class="card p-3">
+      <h6>Recent Expenses</h6>
+      <table class="table table-sm mb-0"><tbody>
+        {% for e in recent_expenses %}<tr><td>{{ e.description }}</td><td>GHS {{ e.amount }}</td><td>{{ e.date }}</td></tr>{% endfor %}
+      </tbody></table>
+    </div>
+  </div>
+</div>
+{% endblock %}

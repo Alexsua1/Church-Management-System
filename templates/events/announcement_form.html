@@ -1,0 +1,13 @@
+{% extends "base/dashboard_base.html" %}
+{% block page_title %}New Announcement{% endblock %}
+{% block content %}
+<div class="card p-4" style="max-width:600px;">
+  <form method="post">
+    {% csrf_token %}
+    {% for field in form %}
+    <div class="mb-3"><label class="form-label">{{ field.label }}</label>{{ field }}</div>
+    {% endfor %}
+    <button class="btn btn-navy" type="submit">Post Announcement</button>
+  </form>
+</div>
+{% endblock %}

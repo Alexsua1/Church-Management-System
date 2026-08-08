@@ -1,0 +1,26 @@
+<div class="row g-3 mb-4">
+  <div class="col-md-3">
+    <div class="card stat-card p-3">
+      <div class="small">Total Members</div>
+      <div class="stat-value">{{ total_members }}</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stat-card gold p-3">
+      <div class="small">Departments</div>
+      <div class="stat-value">{{ total_departments }}</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stat-card p-3">
+      <div class="small">Upcoming Events</div>
+      <div class="stat-value">{{ upcoming_events|length }}</div>
+    </div>
+  </div>
+  <div class="col-md-3">
+    <div class="card stat-card gold p-3">
+      <div class="small">Last Attendance</div>
+      <div class="stat-value">{{ last_attendance_count|default:"-" }}</div>
+    </div>
+  </div>
+</div>

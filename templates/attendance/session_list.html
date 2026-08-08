@@ -1,0 +1,24 @@
+{% extends "base/dashboard_base.html" %}
+{% block page_title %}Attendance Sessions{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-between mb-3">
+  <h5>Attendance Sessions</h5>
+  <a href="{% url 'attendance:create' %}" class="btn btn-navy"><i class="fa-solid fa-plus"></i> New Session</a>
+</div>
+<div class="card p-3">
+  <table class="table table-hover align-middle mb-0">
+    <thead><tr><th>Type</th><th>Date</th><th>Branch</th><th>Checked In</th><th></th></tr></thead>
+    <tbody>
+      {% for s in sessions %}
+      <tr>
+        <td>{{ s.get_session_type_display }}</td>
+        <td>{{ s.date }}</td>
+        <td>{{ s.branch }}</td>
+        <td>{{ s.records.count }}</td>
+        <td><a href="{% url 'attendance:take' s.pk %}" class="btn btn-sm btn-outline-primary">Take Attendance</a></td>
+      </tr>
+      {% empty %}<tr><td colspan="5" class="text-center text-muted">No sessions yet.</td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
