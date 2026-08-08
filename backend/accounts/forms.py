@@ -46,3 +46,9 @@ class DonationForm(forms.Form):
                  ("SEED", "Seed / Special Offering")],
         widget=forms.Select(attrs={"class": "form-select"}),
     )
+
+class SignUpForm(UserCreationForm):
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'phone_number', 'role')
+
