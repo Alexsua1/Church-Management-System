@@ -35,6 +35,17 @@ def manage_users(request):
     users = User.objects.all().order_by("role", "username")
     return render(request, "accounts/user_list.html", {"users": users})
 
+
+@admin_required
+def create_user(request):
+    form = StaffUserCreationForm(request.POST or None)
+    if request.method == "POST" and form.is_valid():
+        form.save()
+        messages.success(request, "New user account created.")
+        return redirect('accounts:manage_users')
+    return render(request, "accounts/user_form.html", {"form": form})
+
+
 @admin_required
 def deactivate_user(request, user_id):
     from .models import User
@@ -43,15 +54,11 @@ def deactivate_user(request, user_id):
     user.save()
     messages.success(request, f"{user.username} has been deactivated.")
     return redirect('accounts:manage_users')
-def deactivate_user(request, user_id):
-    from .models import User
-    user = User.objects.get(id=user_id)
-    user.is_active = False
-    user.save()
-    messages.success(request, f"{user.username} has been deactivated.")
-    return redirect('accounts:manage_users')
 
 
+@login_required
+def profile(request):
+    return render(request, "accounts/profile.html", {"user_obj": request.user})
 
 @login_required
 def profile(request):
