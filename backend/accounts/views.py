@@ -60,19 +60,20 @@ def deactivate_user(request, user_id):
 def profile(request):
     return render(request, "accounts/profile.html", {"user_obj": request.user})
 
-@login_required
-def profile(request):
-    return render(request, "accounts/profile.html", {"user_obj": request.user})
+
 
 def signup_view(request):
     if request.user.is_authenticated:
         return redirect('dashboard:home')
+
     form = SignUpForm(request.POST or None)
+
     if request.method == "POST" and form.is_valid():
         user = form.save()
         login(request, user)
         messages.success(request, "Account created successfully!")
-        return redirect('dashboard:home')
+        return redirect('public:home')
+
     return render(request, "accounts/signup.html", {"form": form})
 
 
