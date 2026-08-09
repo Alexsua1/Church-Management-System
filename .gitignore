@@ -5,3 +5,6 @@ _pycache_/
 db.sqlite3
 media/
 staticfiles/
+_pycache_/
+*.pyc
+database/db.sqlite3
